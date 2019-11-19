@@ -1,3 +1,4 @@
+# coding=utf-8
 # perceptron_pacman.py
 # --------------------
 # Licensing Information:  You are free to use or extend these projects for
@@ -61,3 +62,4 @@ class PerceptronClassifierPacman(PerceptronClassifier):
                 if (label != trainingLabels[i]):
                     self.weights += f[trainingLabels[i]]
                     self.weights -= f[label]
+        # Ta xét tương tự câu 1

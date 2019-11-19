@@ -1,3 +1,4 @@
+# coding=utf-8
 # dataClassifier.py
 # -----------------
 # Licensing Information:  You are free to use or extend these projects for
@@ -91,6 +92,7 @@ def enhancedFeatureExtractorDigit(datum):
     features[3] = 0
     features[regions] = 1
     return features
+    # Ở hàm này, ta sẽ duyệt tuần tự băng 2 vòng for để tìm số vùng bị bao và trả về feature
 
 
 def pixArray(datum, x, y, marked):
@@ -108,6 +110,10 @@ def pixArray(datum, x, y, marked):
         if (datum.getPixel(px, py) == 0 and marked[px][py] == 0):
             marked = pixArray(datum, px, py, marked)
     return marked
+    # Hàm pixArray tìm số lượng các vùng. Chẳng hạn số 4, 6, 9 có 2 vùng bị bao còn số 8 thì 3 vùng bao quanh
+    # Đây là 1 hàm đệ quy xét 4 hướng
+    # DIGIT_DATUM_WIDTH: kích cỡ của số đãy
+    # dùng biến marked để đánh dấu xem mình đã duyệt hay chưa
     #end Question 4
 
 def basicFeatureExtractorPacman(state):
@@ -157,9 +163,13 @@ def enhancedPacmanFeatures(state, action):
     state_food = state.getFood()
     ghostStates = successor.getGhostStates()
 
-    food = [(x, y) for x, row in enumerate(state_food) for y, food in enumerate(row) if food]
+    # Khởi tạo các biến từ trạng thái game hiện tại
 
+    food = [(x, y) for x, row in enumerate(state_food) for y, food in enumerate(row) if food]
+    # for cái food
     nearest_ghosts = sorted([util.manhattanDistance(pac_pos, i) for i in ghosts])
+    # tìm kiếm con ma gần nhất
+    # sau đó ta thêm các feature tương ứng
     features["nearest_ghost"] = 0 if len(nearest_ghosts) == 0 else nearest_ghosts[0] * 1.0
 
     nearest_caps = sorted([util.manhattanDistance(pac_pos, i) for i in capsules])
